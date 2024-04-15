@@ -21,14 +21,17 @@ pub async fn create_users(username:String, password:String, role_codes:Vec<Strin
 pub async fn list_users(){
     let mut c = load_db_connection().await;
     let users = UserRepository::find_with_roles(&mut c).await.unwrap();
-    println!("users {:?}", users);
+   for user in users {
+        println!("users {:?}", user);
+   }
     // List existing users
 
 }
 
 pub async fn delete_users(id:i32){
-    // let mut c = load_db_connection().await;
-    println!("Delete by user ID {}", id);
+    let mut c = load_db_connection().await;
+    UserRepository::delete(&mut c, id).await.unwrap();
+    println!("user silindi {:?}", id)
 
 
     // Delete by user ID
